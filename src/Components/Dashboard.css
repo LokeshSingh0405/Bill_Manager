@@ -1,0 +1,33 @@
+.header{
+    text-align: center;
+}
+
+.boxContainer{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.left{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    
+}
+
+.right{
+    display: flex;
+    justify-content: space-between;
+    margin: 15px;
+}
+
+.outlinedNumber{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: -50px;
+    margin-left: 50px;
+}
