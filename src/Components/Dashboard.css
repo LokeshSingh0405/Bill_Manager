@@ -2,32 +2,49 @@
     text-align: center;
 }
 
+.heading{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .boxContainer{
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
 }
 
-.left{
+.upperSection{
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 50px;
-    
 }
 
-.right{
-    display: flex;
+.billListContainer{
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.midSection{
+    display: grid;
+    grid-template-columns: 35vw 50vw;
     justify-content: space-between;
     margin: 15px;
 }
 
-.outlinedNumber{
+.chart{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    height: 85%;
+    align-items: center;
+}
+
+.lowerSection{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: -50px;
-    margin-left: 50px;
 }

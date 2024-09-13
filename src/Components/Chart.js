@@ -58,10 +58,7 @@ import { useSelector } from 'react-redux';
 
 
     return (
-        <div style={{width : "50%"}}>
-            <Line options={options} data={data} />      
-
-        </div>
+      <Line options={options} data={data} />      
     )
 }
 

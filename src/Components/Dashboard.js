@@ -44,59 +44,64 @@ const DashBoard = () => {
   return (
     <>
       <Box className="boxContainer">
-        <h1 className="header">Your Bill Manager Buddy.....</h1>
-        <Box>
-          <Box className="left">
-            <Filter />
-            <Button onClick={handleOpen} variant="contained" className="btn">
-              Add Bill
-            </Button>
-          </Box>
-          <Box className="right">
+        <Box className = "heading">
+          <h1 className="header">Your Bill Manager Buddy.....</h1>
+        </Box>
+
+        <Box className="upperSection">
+          <Filter />
+          <Button onClick={handleOpen} variant="contained" className="btn">
+            Add Bill
+          </Button>
+        </Box>
+
+        <Box className="midSection">
+          <Box className="billListContainer">
             <Billlist
               setOpen={setOpen}
               setSelectedBill={setSelectedBill}
               isEditing={isEditing}
               setIsEditing={setIsEditing}
             />
+          </Box>
+
+          <Box className="chart">
             <Chart />
           </Box>
-        </Box>
 
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Billform
-              handleClose={handleClose}
-              isEditing={isEditing}
-              setIsEditing={setIsEditing}
-              selectedBill={selectedBill}
-              setSelectedBill={setSelectedBill}
+          <Box className="lowerSection">
+            <TextField
+              id="outlined-number"
+              label="Enter budget to highlight bills"
+              type="number"
+              onChange={handleChange}
+              name="budget"
+              slotProps={{
+                inputLabel: {
+                  shrink: true,
+                },
+              }}
             />
           </Box>
-        </Modal>
-
-        <Box className="outlinedNumber">
-          <h5>Enter budget to highlight bills that should be paid.</h5>
-
-          <TextField
-            id="outlined-number"
-            label="Your Budget"
-            type="number"
-            onChange={handleChange}
-            name="budget"
-            slotProps={{
-              inputLabel: {
-                shrink: true,
-              },
-            }}
-          />
         </Box>
       </Box>
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Billform
+            handleClose={handleClose}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+            selectedBill={selectedBill}
+            setSelectedBill={setSelectedBill}
+          />
+        </Box>
+      </Modal>
     </>
   );
 };

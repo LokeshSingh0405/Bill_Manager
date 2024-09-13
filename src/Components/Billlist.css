@@ -9,12 +9,11 @@
   flex-direction: column;
   box-sizing: border-box;
   gap: 2px;
-  height: 350px;
+  height: 70vh;
   overflow-y: auto;
 }
 
 .headers {
-  /* display: flex; */
   justify-content: space-between;
   width: 100%;
   flex-wrap: wrap;
@@ -22,7 +21,7 @@
 
 .billList {
   padding: 15px;
-  border: 1px solid #000000;
+  border: 1px solid #11ce76;
   border-radius: 5px;
   margin-bottom: 5px;
   margin-top: 15px;
