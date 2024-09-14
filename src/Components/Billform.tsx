@@ -12,20 +12,42 @@ import React, { useEffect } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useDispatch } from "react-redux";
 import { addBill, editBill } from "../Redux/Slice/billSlice";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
+import {
+  DateValidationError,
+  PickerChangeHandlerContext,
+} from "@mui/x-date-pickers";
 
-const Billform = ({ handleClose, selectedBill, setIsEditing, isEditing }) => {
+interface BillFormData {
+  id?: string;
+  description: string;
+  category: string;
+  amount: number;
+  date: string;
+}
+
+interface BillFormProps {
+  handleClose: () => void;
+  selectedBill: BillFormData | undefined ;
+  isEditing: boolean;
+}
+
+const Billform: React.FC<BillFormProps> = ({
+  handleClose,
+  isEditing,
+  selectedBill,
+}) => {
   const dispatch = useDispatch();
 
-  const [formState, setFormState] = React.useState({
+  const [formState, setFormState] = React.useState<BillFormData>({
     description: "",
     category: "",
-    amount: null,
+    amount: 0,
     date: "",
     id: "",
   });
 
-  const handleChange = (event) => {
+  const handleChange = (event: { target: { name: string; value: string } }) => {
     const { name, value } = event.target;
     setFormState((prev) => ({
       ...prev,
@@ -38,22 +60,25 @@ const Billform = ({ handleClose, selectedBill, setIsEditing, isEditing }) => {
       setFormState({
         description: selectedBill.description,
         category: selectedBill.category || "",
-        amount: Number(selectedBill.amount) || "",
+        amount: (Number(selectedBill.amount) as unknown as number) ,
         date: selectedBill.date || "",
         id: selectedBill.id || "",
       });
     }
   }, [selectedBill]);
 
-  const handleDateChange = (newDate) => {
-    const formatedDate = newDate.$d?.toISOString().slice(0, 10);
+  const handleDateChange = (
+    newDate: Dayjs | null,
+    context: PickerChangeHandlerContext<DateValidationError>
+  ) => {
+    const formatedDate = newDate ? newDate.toISOString().slice(0, 10) : "";
     setFormState((prev) => ({
       ...prev,
       date: formatedDate,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (isEditing) {
       dispatch(editBill(formState));

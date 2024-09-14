@@ -5,11 +5,31 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteBill } from "../Redux/Slice/billSlice";
 import React, { useEffect } from "react";
 
-const Billlist = ({ setOpen, setSelectedBill, setIsEditing }) => {
-  const bills = useSelector((state) => state.bills.bills);
-  const filteredCategory = useSelector((state) => state.bills.filteredCategory);
-  const userBudget = useSelector((state) => state.bills.monthlyBudget);
-  const [billsToPay, setBillsToPay] = React.useState(undefined);
+interface Bill {
+  description: string;
+  category: string;
+  amount: number;
+  date: string;
+  id: string;
+}
+
+interface BillListProps {
+  setOpen: (open: boolean) => void;
+  setSelectedBill: (selectedBill: Bill) => void;
+  setIsEditing: (isEditing: boolean) => void;
+}
+
+const Billlist: React.FC<BillListProps> = ({
+  setOpen,
+  setSelectedBill,
+  setIsEditing,
+}) => {
+  const bills = useSelector((state: any) => state.bills.bills);
+  const filteredCategory = useSelector(
+    (state: any) => state.bills.filteredCategory
+  );
+  const userBudget = useSelector((state: any) => state.bills.monthlyBudget);
+  const [billsToPay, setBillsToPay] = React.useState<Bill[]>([]);
 
   const dispatch = useDispatch();
 
@@ -28,11 +48,11 @@ const Billlist = ({ setOpen, setSelectedBill, setIsEditing }) => {
     setBillsToPay(billToPay);
   }, [userBudget, bills]);
 
-  const handleChange = (id) => {
+  const handleChange = (id: any) => {
     if (id) {
       setIsEditing(true);
       setOpen(true);
-      const billToEdit = bills.find((bill) => bill.id === id);
+      const billToEdit = bills.find((bill: Bill) => bill.id === id);
       if (billToEdit) {
         console.log(billToEdit);
         setSelectedBill(billToEdit);
@@ -41,12 +61,13 @@ const Billlist = ({ setOpen, setSelectedBill, setIsEditing }) => {
   };
 
   const filteredBills = bills.filter(
-    (bill) => filteredCategory === "" || bill.category === filteredCategory
+    (bill: Bill) =>
+      filteredCategory === "" || bill.category === filteredCategory
   );
 
   return (
     <Box className="main">
-      {filteredBills.map((bill) => {
+      {filteredBills.map((bill: Bill) => {
         const isBillToPay = billsToPay?.some(
           (payBill) => payBill.id === bill.id
         );
