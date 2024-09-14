@@ -21,20 +21,29 @@ const style = {
   p: 4,
 };
 
+interface Bill {
+  description: string;
+  category: string;
+  amount: number;
+  date: string;
+  id?: string;
+}
+
+
 const DashBoard = () => {
   const [open, setOpen] = React.useState(false);
-  const [selectedBill, setSelectedBill] = React.useState(null);
-  const [isEditing, setIsEditing] = React.useState(false);
+  const [selectedBill, setSelectedBill] = React.useState<Bill | undefined >();
+  const [isEditing, setIsEditing] = React.useState<boolean>(false);
 
   const dispatch = useDispatch();
 
   const handleOpen = () => {
     setOpen(true);
     setIsEditing(false);
-    setSelectedBill(false);
+    setSelectedBill(undefined);
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: { target: { value: any; }; }) => {
     const budget = event.target.value;
     dispatch(setMonthlyBudget(budget));
   };
@@ -56,7 +65,6 @@ const DashBoard = () => {
             <Billlist
               setOpen={setOpen}
               setSelectedBill={setSelectedBill}
-              isEditing={isEditing}
               setIsEditing={setIsEditing}
             />
             <Chart />
@@ -73,9 +81,7 @@ const DashBoard = () => {
             <Billform
               handleClose={handleClose}
               isEditing={isEditing}
-              setIsEditing={setIsEditing}
               selectedBill={selectedBill}
-              setSelectedBill={setSelectedBill}
             />
           </Box>
         </Modal>
